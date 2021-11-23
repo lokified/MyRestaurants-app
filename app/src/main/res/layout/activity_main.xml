@@ -19,19 +19,20 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
+        android:fontFamily="@font/roboto"
+        android:text="MyRestaurants"
         android:textColor="@color/colorTextIcons"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:text="MyRestaurants" />
+        android:textSize="50sp"
+        android:textStyle="bold" />
 
     <Button
+        android:id="@+id/findRestaurantsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Find Restaurants"
-        android:id="@+id/findRestaurantsButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimaryDark"
+        android:text="Find Restaurants"
         android:textColor="@color/colorTextIcons" />
 
     <EditText
@@ -42,7 +43,8 @@
         android:layout_marginBottom="16dp"
         android:background="@color/colorTextIcons"
         android:hint="Enter Zip Code"
+        android:textColorHint="@color/colorPrimaryText"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:textColor="@color/colorPrimaryText"/>
 
 </RelativeLayout>
