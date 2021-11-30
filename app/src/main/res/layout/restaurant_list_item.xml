@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="110dp">
 
     <ImageView
         android:layout_width="130dp"
@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:text="One Cuisine Type"
             android:id="@+id/categoryTextView"
-            android:textStyle="italic"/>
+            android:textStyle="italic"
+            android:textColor="@color/colorAccent"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

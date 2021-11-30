@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.moringaschool.myrestaurants.R;
 import com.moringaschool.myrestaurants.models.Business;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -60,6 +61,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         }
 
         public void bindRestaurant(Business restaurant) {
+            Picasso.get().load(restaurant.getImageUrl()).into(mRestaurantImageView);
             mNameTextView.setText(restaurant.getName());
             mCategoryTextView.setText(restaurant.getCategories().get(0).getTitle());
             mRatingTextView.setText("Rating: " + restaurant.getRating() + "/5");
