@@ -46,7 +46,7 @@ public class RestaurantsActivityInstrumentationTest {
     public void listItemClickDisplaysToastWithCorrectRestaurant(){
         String restaurantName = "Comrades";
         onData(anything())
-                .inAdapterView(withId(R.id.listView))
+                .inAdapterView(withId(R.id.recyclerView))
                 .atPosition(0)
                 .perform(click());
         onView(withText(restaurantName))
