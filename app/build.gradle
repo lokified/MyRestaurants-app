@@ -32,7 +32,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes.each {
-        it.buildConfigField 'String', 'YELP_API_KEY', yelpApiKey
+        it.buildConfigField 'String', 'YELP_API_KEY', YelpApiKey
     }
 }
 
@@ -51,6 +51,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
     //Robolectric dependencies
 

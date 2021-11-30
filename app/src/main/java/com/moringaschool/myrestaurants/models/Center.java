@@ -1,5 +1,5 @@
 
-package com.moringaschool.myrestaurants;
+package com.moringaschool.myrestaurants.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

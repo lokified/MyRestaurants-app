@@ -21,6 +21,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.not;
 
+import com.moringaschool.myrestaurants.ui.RestaurantActivity;
+
 @RunWith(AndroidJUnit4.class)
 public class RestaurantsActivityInstrumentationTest {
 

@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MyRestaurants">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:theme="@style/NoActionBarTheme"
             android:exported="true">
             <intent-filter>
@@ -23,10 +23,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RestaurantActivity">
+            android:name=".ui.RestaurantActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.moringaschool.myrestaurants.MainActivity">
+                android:value="com.moringaschool.myrestaurants.ui.MainActivity">
             </meta-data>
         </activity>
 
