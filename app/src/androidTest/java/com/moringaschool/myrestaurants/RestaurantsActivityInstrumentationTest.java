@@ -21,22 +21,22 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.not;
 
-import com.moringaschool.myrestaurants.ui.RestaurantActivity;
+import com.moringaschool.myrestaurants.ui.RestaurantsListActivity;
 
 @RunWith(AndroidJUnit4.class)
 public class RestaurantsActivityInstrumentationTest {
 
     @Rule
-    public ActivityScenarioRule<RestaurantActivity> activityTestRule =
-            new ActivityScenarioRule<>(RestaurantActivity.class);
+    public ActivityScenarioRule<RestaurantsListActivity> activityTestRule =
+            new ActivityScenarioRule<>(RestaurantsListActivity.class);
 
     private View activityDecorView;
 
     @Before
     public void setUp() {
-        activityTestRule.getScenario().onActivity(new ActivityScenario.ActivityAction<RestaurantActivity>() {
+        activityTestRule.getScenario().onActivity(new ActivityScenario.ActivityAction<RestaurantsListActivity>() {
             @Override
-            public void perform(RestaurantActivity activity) {
+            public void perform(RestaurantsListActivity activity) {
                 activityDecorView = activity.getWindow().getDecorView();
             }
         });
