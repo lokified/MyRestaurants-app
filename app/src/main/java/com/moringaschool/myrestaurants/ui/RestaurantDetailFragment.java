@@ -1,5 +1,7 @@
 package com.moringaschool.myrestaurants.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,7 +33,7 @@ import butterknife.ButterKnife;
  * Use the {@link RestaurantDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RestaurantDetailFragment extends Fragment {
+public class RestaurantDetailFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.restaurantImageView) ImageView mImageLabel;
     @BindView(R.id.restaurantNameTextView) TextView mNameLabel;
@@ -84,7 +86,34 @@ public class RestaurantDetailFragment extends Fragment {
         mRatingLabel.setText(Double.toString(mRestaurant.getRating()) + "/5");
         mPhoneLabel.setText(mRestaurant.getPhone());
         mAddressLabel.setText(mRestaurant.getLocation().toString());
+
+        mWebsiteLabel.setOnClickListener(this);
+        mPhoneLabel.setOnClickListener(this);
+        mAddressLabel.setOnClickListener(this);
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == mWebsiteLabel) {
+            Intent webIntent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse(mRestaurant.getUrl()));
+            startActivity(webIntent);
+        }
+
+        if (v == mPhoneLabel) {
+            Intent phoneIntent = new Intent(Intent.ACTION_DIAL,
+                    Uri.parse("tel:" + mRestaurant.getPhone()));
+            startActivity(phoneIntent);
+        }
+
+        if (v == mAddressLabel) {
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("geo:" + mRestaurant.getCoordinates().getLatitude()
+                    + "," + mRestaurant.getCoordinates().getLongitude()
+                    + "?q=(" + mRestaurant.getName() + ")"));
+            startActivity(mapIntent);
+        }
     }
 
 
