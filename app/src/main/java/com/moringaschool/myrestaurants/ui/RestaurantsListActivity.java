@@ -5,12 +5,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.moringaschool.myrestaurants.Constants;
 import com.moringaschool.myrestaurants.R;
 import com.moringaschool.myrestaurants.adapters.RestaurantListAdapter;
 import com.moringaschool.myrestaurants.models.Business;
@@ -28,6 +31,9 @@ import retrofit2.Response;
 
 public class RestaurantsListActivity extends AppCompatActivity {
 
+    private SharedPreferences mSharedPreferences;
+    private String mRecentAddress;
+
     private static final String TAG = RestaurantsListActivity.class.getSimpleName();
     private RestaurantListAdapter mAdapter;
 
@@ -44,17 +50,11 @@ public class RestaurantsListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                String restaurant = ((TextView)view).getText().toString();
-//                Toast.makeText(RestaurantActivity.this, restaurant, Toast.LENGTH_LONG).show();
-//            }
-//        });
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCE_LOCATION_KEY, null);
+        Log.d("Shared Pref Location ",mRecentAddress);
 
-        Intent intent = getIntent();
-        String location = intent.getStringExtra("location");
-
+        String location = mRecentAddress;
 
         YelpApi client = YelpClient.getClient();
 
