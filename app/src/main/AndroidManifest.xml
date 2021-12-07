@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyRestaurants">
         <activity
+            android:name=".ui.SavedRestaurantListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.RestaurantDetailActivity"
             android:exported="false" />
         <activity
@@ -28,7 +31,7 @@
         <activity android:name=".ui.RestaurantsListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.moringaschool.myrestaurants.ui.MainActivity"></meta-data>
+                android:value="com.moringaschool.myrestaurants.ui.MainActivity" />
         </activity>
 
         <meta-data
