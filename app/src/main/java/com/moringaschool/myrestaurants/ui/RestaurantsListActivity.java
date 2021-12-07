@@ -31,8 +31,8 @@ import retrofit2.Response;
 
 public class RestaurantsListActivity extends AppCompatActivity {
 
-    private SharedPreferences mSharedPreferences;
-    private String mRecentAddress;
+//    private SharedPreferences mSharedPreferences;
+//    private String mRecentAddress;
 
     private static final String TAG = RestaurantsListActivity.class.getSimpleName();
     private RestaurantListAdapter mAdapter;
@@ -50,11 +50,14 @@ public class RestaurantsListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCE_LOCATION_KEY, null);
-        Log.d("Shared Pref Location ",mRecentAddress);
+//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCE_LOCATION_KEY, null);
+//        Log.d("Shared Pref Location ",mRecentAddress);
 
-        String location = mRecentAddress;
+        //String location = mRecentAddress;
+
+        Intent intent = getIntent();
+        String location = intent.getStringExtra("location");
 
         YelpApi client = YelpClient.getClient();
 
