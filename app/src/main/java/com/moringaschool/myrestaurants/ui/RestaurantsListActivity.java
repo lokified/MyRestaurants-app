@@ -9,8 +9,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.moringaschool.myrestaurants.Constants;
@@ -31,8 +35,9 @@ import retrofit2.Response;
 
 public class RestaurantsListActivity extends AppCompatActivity {
 
-//    private SharedPreferences mSharedPreferences;
-//    private String mRecentAddress;
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
+    private String mRecentAddress;
 
     private static final String TAG = RestaurantsListActivity.class.getSimpleName();
     private RestaurantListAdapter mAdapter;
@@ -49,52 +54,41 @@ public class RestaurantsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_restaurant);
         ButterKnife.bind(this);
 
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCE_LOCATION_KEY, null);
 
-//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCE_LOCATION_KEY, null);
-//        Log.d("Shared Pref Location ",mRecentAddress);
+        if(mRecentAddress != null) {
+            fetchRestaurants(mRecentAddress);
+        }
+    }
 
-        //String location = mRecentAddress;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+        ButterKnife.bind(this);
 
-        Intent intent = getIntent();
-        String location = intent.getStringExtra("location");
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mSharedPreferences.edit();
 
-        YelpApi client = YelpClient.getClient();
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
 
-        Call<YelpBusinessesSearchResponse> call = client.getRestaurants(location,"restaurants");
-
-        call.enqueue(new Callback<YelpBusinessesSearchResponse>() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onResponse(Call<YelpBusinessesSearchResponse> call,Response<YelpBusinessesSearchResponse> response) {
-
-                hideProgressBar();
-
-                if (response.isSuccessful()) {
-                    restaurants = response.body().getBusinesses();
-                    mAdapter = new RestaurantListAdapter(RestaurantsListActivity.this,restaurants);
-                    mRecyclerView.setAdapter(mAdapter);
-
-                    RecyclerView.LayoutManager layoutManager =
-                            new LinearLayoutManager(RestaurantsListActivity.this);
-                    mRecyclerView.setLayoutManager(layoutManager);
-                    mRecyclerView.setHasFixedSize(true);
-
-                    showRestaurants();
-                }
-
-                else {
-                    showUnsuccessfulMessage();
-                }
+            public boolean onQueryTextSubmit(String location) {
+                addToSharedPreferences(location);
+                fetchRestaurants(location);
+                return false;
             }
 
             @Override
-            public void onFailure(Call<YelpBusinessesSearchResponse> call, Throwable t) {
-                Log.e(TAG,"OnFailure: ",t);
-                hideProgressBar();
-                showFailureMessage();
-
+            public boolean onQueryTextChange(String newText) {
+                return false;
             }
         });
+
+        return true;
     }
 
     public void showFailureMessage() {
@@ -114,5 +108,47 @@ public class RestaurantsListActivity extends AppCompatActivity {
 
     public void hideProgressBar() {
         mProgressBar.setVisibility(View.GONE);
+    }
+
+    private void addToSharedPreferences(String location) {
+        mEditor.putString(Constants.PREFERENCE_LOCATION_KEY, location).apply();
+    }
+
+    private void fetchRestaurants(String location) {
+        YelpApi client = YelpClient.getClient();
+
+        Call<YelpBusinessesSearchResponse> call = client.getRestaurants(location, "restaurants");
+
+        call.enqueue(new Callback<YelpBusinessesSearchResponse>() {
+            @Override
+            public void onResponse(Call<YelpBusinessesSearchResponse> call, Response<YelpBusinessesSearchResponse> response) {
+                hideProgressBar();
+
+                if (response.isSuccessful()) {
+                    restaurants = response.body().getBusinesses();
+                    mAdapter = new RestaurantListAdapter(RestaurantsListActivity.this, restaurants);
+                    mRecyclerView.setAdapter(mAdapter);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(RestaurantsListActivity.this);
+                    mRecyclerView.setLayoutManager(layoutManager);
+                    mRecyclerView.setHasFixedSize(true);
+
+                    showRestaurants();
+
+                }
+
+                else {
+                    showUnsuccessfulMessage();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<YelpBusinessesSearchResponse> call, Throwable t) {
+                Log.e(TAG, "onFailure: ",t );
+                hideProgressBar();
+                showFailureMessage();
+
+            }
+        });
     }
 }

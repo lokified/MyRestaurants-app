@@ -26,43 +26,13 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-//    private SharedPreferences mSharedPreferences;
-//    private SharedPreferences.Editor mEditor;
-
-    private DatabaseReference mSearchedLocationReference;
-    private ValueEventListener mSearchedLocationReferenceListener;
-
     @BindView(R.id.findRestaurantsButton) Button mFindRestaurantsButton;
-    @BindView(R.id.locationEditText) EditText mLocationEditText;
     @BindView(R.id.appNameTextView)  TextView mAppNameTextView;
     @BindView(R.id.savedRestaurantsButton) Button mSavedRestaurantsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        mEditor = mSharedPreferences.edit();
-
-        mSearchedLocationReference = FirebaseDatabase
-                .getInstance()
-                .getReference()
-                .child(Constants.FIREBASE_CHILD_SEARCHED_LOCATION);
-
-        mSearchedLocationReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot locationSnapshot : dataSnapshot.getChildren()) {
-                    String location = locationSnapshot.getValue().toString();
-                    Log.d("Locations Updated", "location : " + location);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -76,15 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v == mFindRestaurantsButton) {
-            String location = mLocationEditText.getText().toString();
-//            if (!(location).equals("")) {
-//                addToSharedPreference(location);
-//            }
-
-            saveLocationToFireBase(location);
-
             Intent intent = new Intent(MainActivity.this, RestaurantsListActivity.class);
-            intent.putExtra("location",location);
             startActivity(intent);
         }
 
@@ -93,19 +55,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mSearchedLocationReference.removeEventListener(mSearchedLocationReferenceListener);
-    }
-
-    public void saveLocationToFireBase(String location) {
-        mSearchedLocationReference.push().setValue(location);
-    }
-
-//    private void addToSharedPreference(String location) {
-//        mEditor.putString(Constants.PREFERENCE_LOCATION_KEY, location).apply();
-//    }
-
 }
