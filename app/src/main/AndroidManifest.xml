@@ -23,8 +23,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
-            android:exported="true"
-            android:theme="@style/NoActionBarTheme" />
+            android:exported="true"/>
         <activity android:name=".ui.RestaurantsListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
