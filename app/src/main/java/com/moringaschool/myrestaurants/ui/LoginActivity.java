@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity  implements View.OnClickLis
         mSignInProgressBar.setVisibility(View.VISIBLE);
         mLoadingSignUp.setVisibility(View.VISIBLE);
         //mAuthProgressDialog.setMessage("Authenticating with Firebase...");
-        mLoadingSignUp.setText("Log in you in");
+        mLoadingSignUp.setText("Loging you in");
     }
 
     private void hideProgressBar() {

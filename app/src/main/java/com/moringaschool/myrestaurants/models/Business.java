@@ -56,10 +56,8 @@ public class Business {
     @Expose
     private List<String> transactions = null;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
+    private String pushId;
+
     public Business() {
     }
 
@@ -220,4 +218,11 @@ public class Business {
         this.transactions = transactions;
     }
 
+    public String getPushId() {
+        return pushId;
+    }
+
+    public void setPushId(String pushId) {
+        this.pushId = pushId;
+    }
 }

@@ -52,7 +52,8 @@ public class SavedRestaurantListActivity extends AppCompatActivity {
 
         mFirebaseAdapter = new FirebaseRecyclerAdapter<Business, FirebaseRestaurantViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull FirebaseRestaurantViewHolder firebaseRestaurantViewHolder, int position, @NonNull Business restaurant) {
+            protected void onBindViewHolder(@NonNull FirebaseRestaurantViewHolder firebaseRestaurantViewHolder,
+                                            int position, @NonNull Business restaurant) {
                 firebaseRestaurantViewHolder.bindRestaurant(restaurant);
             }
 
