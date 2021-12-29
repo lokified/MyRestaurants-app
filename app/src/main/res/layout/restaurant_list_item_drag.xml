@@ -22,7 +22,7 @@
             android:layout_alignLeft="@id/restaurantImageView"
             android:layout_alignBottom="@id/restaurantImageView"
             android:gravity="bottom|left"
-            android:src="@drawable/outline_reorder_black_18dp"/>
+            android:src="@drawable/outline_reorder_white_24dp"/>
     </RelativeLayout>
 
     <LinearLayout

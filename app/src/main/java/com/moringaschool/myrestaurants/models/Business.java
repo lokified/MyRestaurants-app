@@ -58,6 +58,8 @@ public class Business {
 
     private String pushId;
 
+    String index;
+
     public Business() {
     }
 
@@ -96,6 +98,7 @@ public class Business {
         this.location = location;
         this.distance = distance;
         this.transactions = transactions;
+        this.index = "not_specified";
     }
 
     public Double getRating() {
@@ -224,5 +227,13 @@ public class Business {
 
     public void setPushId(String pushId) {
         this.pushId = pushId;
+    }
+
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 }
