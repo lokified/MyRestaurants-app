@@ -1,5 +1,6 @@
 package com.moringaschool.myrestaurants.ui;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -27,6 +28,7 @@ import com.moringaschool.myrestaurants.models.Business;
 import com.moringaschool.myrestaurants.models.YelpBusinessesSearchResponse;
 import com.moringaschool.myrestaurants.network.YelpApi;
 import com.moringaschool.myrestaurants.network.YelpClient;
+import com.moringaschool.myrestaurants.util.OnRestaurantSelectedListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ public class RestaurantListFragment extends Fragment {
     private SharedPreferences.Editor mEditor;
     private String mRecentAddress;
     private static final String TAG = RestaurantsListActivity.class.getSimpleName();
+    private OnRestaurantSelectedListener mOnRestaurantSelectedListener;
 
     public RestaurantListFragment() {
         // Required empty public constructor
@@ -81,6 +84,18 @@ public class RestaurantListFragment extends Fragment {
 
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mOnRestaurantSelectedListener = (OnRestaurantSelectedListener) context;
+        }
+        catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + e.getMessage());
+        }
+    }
+
     private void getRestaurants(String location) {
 
         YelpApi client = YelpClient.getClient();
@@ -101,7 +116,7 @@ public class RestaurantListFragment extends Fragment {
                         @Override
                         public void run() {
 
-                            mAdapter = new RestaurantListAdapter(getActivity(), mRestaurants );
+                            mAdapter = new RestaurantListAdapter(getActivity(), mRestaurants ,mOnRestaurantSelectedListener);
                             mRecyclerView.setAdapter(mAdapter);
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
