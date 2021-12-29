@@ -50,16 +50,21 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
     @BindView(R.id.addressTextView) TextView mAddressLabel;
     @BindView(R.id.saveRestaurantButton) TextView mSaveRestaurantButton;
 
+    private List<Business> mRestaurants;
+    private int mPosition;
     private Business mRestaurant;
 
     public RestaurantDetailFragment() {
         // Required empty public constructor
     }
 
-    public static RestaurantDetailFragment newInstance(Business restaurant) {
+    public static RestaurantDetailFragment newInstance(List<Business> restaurant, int position) {
         RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
         Bundle args = new Bundle();
-        args.putParcelable("restaurant", Parcels.wrap(restaurant));
+
+        args.putParcelable(Constants.EXTRA_KEY_RESTAURANTS, Parcels.wrap(restaurant));
+        args.putInt(Constants.EXTRA_KEY_POSITION, position);
+
         restaurantDetailFragment.setArguments(args);
         return restaurantDetailFragment;
     }
@@ -68,7 +73,9 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         assert  getArguments() != null;
-        mRestaurant = Parcels.unwrap(getArguments().getParcelable("restaurant"));
+        mRestaurants = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_KEY_RESTAURANTS));
+        mPosition = getArguments().getInt(Constants.EXTRA_KEY_POSITION);
+        mRestaurant = mRestaurants.get(mPosition);
 
     }
 
