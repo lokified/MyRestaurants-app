@@ -25,6 +25,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     private RestaurantPagerAdapter adapterViewPager;
 
     List<Business> mRestaurants;
+    private String mSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +35,10 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
         mRestaurants = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_KEY_RESTAURANTS));
         int startingPosition = getIntent().getIntExtra(Constants.EXTRA_KEY_POSITION,0);
+        mSource = getIntent().getStringExtra(Constants.KEY_SOURCE);
 
         adapterViewPager = new RestaurantPagerAdapter(getSupportFragmentManager(),
-                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, mRestaurants);
+                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, mRestaurants, mSource);
         mViewPager.setAdapter(adapterViewPager);
         mViewPager.setCurrentItem(startingPosition);
     }

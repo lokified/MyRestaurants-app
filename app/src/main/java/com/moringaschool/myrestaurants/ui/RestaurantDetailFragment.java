@@ -53,17 +53,19 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
     private List<Business> mRestaurants;
     private int mPosition;
     private Business mRestaurant;
+    private String mSource;
 
     public RestaurantDetailFragment() {
         // Required empty public constructor
     }
 
-    public static RestaurantDetailFragment newInstance(List<Business> restaurant, int position) {
+    public static RestaurantDetailFragment newInstance(List<Business> restaurant, int position, String source) {
         RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
         Bundle args = new Bundle();
 
         args.putParcelable(Constants.EXTRA_KEY_RESTAURANTS, Parcels.wrap(restaurant));
         args.putInt(Constants.EXTRA_KEY_POSITION, position);
+        args.putString(Constants.KEY_SOURCE, source);
 
         restaurantDetailFragment.setArguments(args);
         return restaurantDetailFragment;
@@ -76,6 +78,9 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
         mRestaurants = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_KEY_RESTAURANTS));
         mPosition = getArguments().getInt(Constants.EXTRA_KEY_POSITION);
         mRestaurant = mRestaurants.get(mPosition);
+        mSource = getArguments().getString(Constants.KEY_SOURCE);
+
+        setHasOptionsMenu(true);
 
     }
 
@@ -86,6 +91,15 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
 
         View view = inflater.inflate(R.layout.fragment_restaurant_detail,container,false);
         ButterKnife.bind(this,view);
+
+        //shows/hides the save button
+        if (mSource.equals(Constants.SOURCE_SAVED)) {
+            mSaveRestaurantButton.setVisibility(View.GONE);
+        }
+        else {
+            mSaveRestaurantButton.setOnClickListener(this);
+        }
+
         Picasso.get().load(mRestaurant.getImageUrl()).into(mImageLabel);
 
         List<String> categories = new ArrayList<>();
@@ -103,7 +117,7 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
         mWebsiteLabel.setOnClickListener(this);
         mPhoneLabel.setOnClickListener(this);
         mAddressLabel.setOnClickListener(this);
-        mSaveRestaurantButton.setOnClickListener(this);
+
         return view;
     }
 

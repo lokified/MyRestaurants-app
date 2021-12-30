@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
+import com.moringaschool.myrestaurants.Constants;
 import com.moringaschool.myrestaurants.R;
 import com.moringaschool.myrestaurants.models.Business;
 import com.moringaschool.myrestaurants.ui.RestaurantDetailActivity;
@@ -109,8 +110,9 @@ public class FirebaseRestaurantListAdapter extends FirebaseRecyclerAdapter<Busin
                 }
                 else {
                     Intent intent = new Intent(mContext, RestaurantDetailActivity.class);
-                    intent.putExtra("position", firebaseRestaurantViewHolder.getAdapterPosition());
-                    intent.putExtra("restaurants", Parcels.wrap(mRestaurants));
+                    intent.putExtra(Constants.EXTRA_KEY_POSITION, firebaseRestaurantViewHolder.getAdapterPosition());
+                    intent.putExtra(Constants.EXTRA_KEY_RESTAURANTS, Parcels.wrap(mRestaurants));
+                    intent.putExtra(Constants.KEY_SOURCE, Constants.SOURCE_SAVED);
                     mContext.startActivity(intent);
                 }
             }
@@ -118,7 +120,7 @@ public class FirebaseRestaurantListAdapter extends FirebaseRecyclerAdapter<Busin
     }
 
     private void createDetailFragment(int position) {
-        RestaurantDetailFragment detailFragment = RestaurantDetailFragment.newInstance(mRestaurants, position);
+        RestaurantDetailFragment detailFragment = RestaurantDetailFragment.newInstance(mRestaurants, position, Constants.SOURCE_SAVED);
 
         FragmentTransaction ft = ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction();
 

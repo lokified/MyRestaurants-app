@@ -6,5 +6,5 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface OnRestaurantSelectedListener {
-    public void onRestaurantSelected(Integer position, List<Business> restaurants);
+    public void onRestaurantSelected(Integer position, List<Business> restaurants, String source);
 }

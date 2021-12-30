@@ -13,15 +13,17 @@ import java.util.List;
 public class RestaurantPagerAdapter extends FragmentPagerAdapter {
 
     private List<Business> mRestaurant;
+    private String mSource;
 
-    public RestaurantPagerAdapter(@NonNull FragmentManager fm, int behavior, List<Business> restaurants) {
+    public RestaurantPagerAdapter(@NonNull FragmentManager fm, int behavior, List<Business> restaurants, String source) {
         super(fm, behavior);
         mRestaurant = restaurants;
+        mSource = source;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return RestaurantDetailFragment.newInstance(mRestaurant, position);
+        return RestaurantDetailFragment.newInstance(mRestaurant, position, mSource);
     }
 
     @Override

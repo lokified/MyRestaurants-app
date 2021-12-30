@@ -42,6 +42,7 @@ public class RestaurantsListActivity extends AppCompatActivity implements OnRest
 
     private Integer mPosition;
     private List<Business> mRestaurants;
+    private String mSource;
 
 
     @Override
@@ -59,6 +60,7 @@ public class RestaurantsListActivity extends AppCompatActivity implements OnRest
                     Intent intent = new Intent(this, RestaurantDetailActivity.class);
                     intent.putExtra(Constants.EXTRA_KEY_POSITION, mPosition);
                     intent.putExtra(Constants.EXTRA_KEY_RESTAURANTS, Parcels.wrap(mRestaurants));
+                    intent.putExtra(Constants.KEY_SOURCE, mSource);
                     startActivity(intent);
                 }
             }
@@ -73,13 +75,15 @@ public class RestaurantsListActivity extends AppCompatActivity implements OnRest
         if (mPosition != null && mRestaurants != null) {
             outState.putInt(Constants.EXTRA_KEY_POSITION, mPosition);
             outState.putParcelable(Constants.EXTRA_KEY_RESTAURANTS, Parcels.wrap(mRestaurants));
+            outState.putString(Constants.KEY_SOURCE, mSource);
         }
     }
 
     @Override
-    public void onRestaurantSelected(Integer position, List<Business> restaurants) {
+    public void onRestaurantSelected(Integer position, List<Business> restaurants, String source) {
         mPosition = position;
         mRestaurants = restaurants;
+        mSource = source;
     }
 
 }
