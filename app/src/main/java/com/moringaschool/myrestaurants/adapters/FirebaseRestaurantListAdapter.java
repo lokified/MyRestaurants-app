@@ -103,14 +103,14 @@ public class FirebaseRestaurantListAdapter extends FirebaseRecyclerAdapter<Busin
         firebaseRestaurantViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int itemPosition = firebaseRestaurantViewHolder.getLayoutPosition();
+                int itemPosition = firebaseRestaurantViewHolder.getAdapterPosition();
 
                 if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
                     createDetailFragment(itemPosition);
                 }
                 else {
                     Intent intent = new Intent(mContext, RestaurantDetailActivity.class);
-                    intent.putExtra(Constants.EXTRA_KEY_POSITION, firebaseRestaurantViewHolder.getAdapterPosition());
+                    intent.putExtra(Constants.EXTRA_KEY_POSITION, itemPosition);
                     intent.putExtra(Constants.EXTRA_KEY_RESTAURANTS, Parcels.wrap(mRestaurants));
                     intent.putExtra(Constants.KEY_SOURCE, Constants.SOURCE_SAVED);
                     mContext.startActivity(intent);
@@ -154,8 +154,7 @@ public class FirebaseRestaurantListAdapter extends FirebaseRecyclerAdapter<Busin
         for (Business restaurant : mRestaurants) {
             int index = mRestaurants.indexOf(restaurant);
             DatabaseReference ref = getRef(index);
-            restaurant.setIndex(Integer.toString(index));
-            ref.setValue(restaurant);
+            ref.child("index").setValue(Integer.toString(index));
         }
     }
 
